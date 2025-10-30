@@ -3,10 +3,8 @@ import { createHash } from 'crypto';
 import { conmysql } from '../db.js';
 import { JWT_SECRET } from '../config.js';
 
-// Función auxiliar para convertir a MD5
-function md5Hash(texto) {
-  return createHash('md5').update(texto).digest('hex');
-}
+// Función para convertir texto a MD5
+const md5Hash = (texto) => createHash('md5').update(texto).digest('hex');
 
 export const login = async (req, res) => {
   const { usuario, clave } = req.body;
@@ -16,6 +14,7 @@ export const login = async (req, res) => {
   }
 
   try {
+    // Buscamos al usuario activo
     const [rows] = await conmysql.query(
       'SELECT * FROM usuarios WHERE usr_usuario = ? AND usr_activo = 1',
       [usuario]
@@ -26,19 +25,15 @@ export const login = async (req, res) => {
     }
 
     const user = rows[0];
-    const claveMD5 = md5Hash(clave);
+    const claveMD5 = md5Hash(clave); // Convertimos la clave ingresada a MD5
 
     if (user.usr_clave !== claveMD5) {
       return res.status(401).json({ message: 'Contraseña incorrecta' });
     }
 
-    // Genera el token JWT
+    // Generamos token JWT (si quieres mantenerlo)
     const token = jwt.sign(
-      {
-        id: user.usr_id,
-        usuario: user.usr_usuario,
-        correo: user.usr_correo
-      },
+      { id: user.usr_id, usuario: user.usr_usuario, correo: user.usr_correo },
       JWT_SECRET,
       { expiresIn: '2h' }
     );
@@ -58,5 +53,6 @@ export const login = async (req, res) => {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 };
+
 
 
