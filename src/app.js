@@ -3,7 +3,7 @@ import fileUpload from 'express-fileupload';
 //importar las rutas OJO
 import clientesRoutes from './routes/clientesRoutes.js'
 import productosRoutes from './routes/productosRoutes.js'
-import { loginRoutes } from './controladores/loginCtrl.js';
+import { loginRoutes } from './routes/loginCtrl.js';
 
 const app=express();
 app.use(fileUpload());

@@ -3,5 +3,5 @@ import {login} from '../controladores/loginCtrl.js'
 
 const router=Router();
 
-router.get('/usuarios',login)
+router.post('/usuarios',login)
 export default router
