@@ -7,7 +7,7 @@ const router=Router();
 /* router.get('/clientes',prueba) */
 router.get('/clientes',verificarToken,getClientes)
 router.get('/clientes/:id',getClientesxId)
-router.post('/clientes',postClientes)
+router.post('/clientes',postClientes)   
 router.put('/clientes/:id',putClientesxId)
 router.delete('/clientes/:id',deleteCliente)
 export default router
