@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { createHash } from "crypto";
-import { conmysql } from "../db.js"; // tu conexión MySQL
+import { conmysql } from "../db.js";
 
-// Función para encriptar clave en MD5
+// Encripta clave en MD5
 function encriptarMD5(clave) {
   return createHash("md5").update(clave).digest("hex");
 }
@@ -31,7 +31,7 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Contraseña incorrecta" });
     }
 
-    // ✅ Generar token
+    // Generar token JWT
     const token = jwt.sign(
       {
         id: user.usr_id,
