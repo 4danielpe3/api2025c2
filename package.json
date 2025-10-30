@@ -5,16 +5,18 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-  "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-fileupload": "^1.5.2",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.15.1"
   },
   "devDependencies": {
