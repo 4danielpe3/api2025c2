@@ -31,7 +31,7 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: 'Contraseña incorrecta' });
     }
 
-    // Generamos token JWT (si quieres mantenerlo)
+    // Generamos token JWT
     const token = jwt.sign(
       { id: user.usr_id, usuario: user.usr_usuario, correo: user.usr_correo },
       JWT_SECRET,
@@ -44,7 +44,8 @@ export const login = async (req, res) => {
       user: {
         id: user.usr_id,
         nombre: user.usr_nombre,
-        correo: user.usr_correo
+        correo: user.usr_correo,
+        usuario: user.usr_usuario
       }
     });
 
@@ -53,6 +54,3 @@ export const login = async (req, res) => {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 };
-
-
-
