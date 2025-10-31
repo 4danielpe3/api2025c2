@@ -5,43 +5,63 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// importar las rutas
+// importar rutas
 import clientesRoutes from './routes/clientesRoutes.js';
 import productosRoutes from './routes/productosRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
 
+// Configurar __dirname en ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Habilitar CORS (permite cualquier origen)
-app.use(cors());
+// --------------------
+// Configuración CORS
+// --------------------
+app.use(cors()); // permite cualquier origen
+// Si quieres restringir a tu frontend:
+// app.use(cors({ origin: 'https://tu-frontend.com' }));
 
-// Middleware para subir archivos
+// --------------------
+// Middlewares
+// --------------------
 app.use(fileUpload({ createParentPath: true }));
 app.use(express.json());
 
-// Crear carpeta uploads si no existe
-const uploadsDir = path.join(__dirname, 'uploads'); // carpeta absoluta en la raíz del proyecto
+// --------------------
+// Carpeta uploads
+// --------------------
+const uploadsDir = path.join(__dirname, 'uploads'); // carpeta absoluta
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
   console.log('Carpeta uploads creada automáticamente');
 }
-
-// Servir la carpeta uploads como estática
+// Servir carpeta uploads como pública
 app.use('/uploads', express.static(uploadsDir));
 
-// indicar las rutas a utilizar
+// --------------------
+// Rutas API
+// --------------------
 app.use('/api', clientesRoutes);
 app.use('/api', productosRoutes);
 app.use('/api', loginRoutes);
 
-// manejar endpoints no encontrados
-app.use((req, resp, next) => {
-  resp.status(400).json({
+// --------------------
+// Manejo de endpoints no encontrados
+// --------------------
+app.use((req, res, next) => {
+  res.status(404).json({
     message: 'Endpoint not found'
   });
+});
+
+// --------------------
+// Error handler genérico
+// --------------------
+app.use((err, req, res, next) => {
+  console.error('Error en el servidor:', err);
+  res.status(500).json({ message: 'Error en el servidor' });
 });
 
 export default app;
