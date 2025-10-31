@@ -3,25 +3,27 @@ import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 // importar las rutas
 import clientesRoutes from './routes/clientesRoutes.js';
 import productosRoutes from './routes/productosRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 
 // Habilitar CORS (permite cualquier origen)
 app.use(cors());
-// Si quieres restringir a tu frontend:
-// app.use(cors({ origin: 'http://localhost:8100' }));
 
 // Middleware para subir archivos
 app.use(fileUpload({ createParentPath: true }));
 app.use(express.json());
 
 // Crear carpeta uploads si no existe
-const uploadsDir = path.join('./uploads'); // carpeta en la raíz del proyecto
+const uploadsDir = path.join(__dirname, 'uploads'); // carpeta absoluta en la raíz del proyecto
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
   console.log('Carpeta uploads creada automáticamente');
