@@ -10,7 +10,12 @@ import loginRoutes from './routes/loginRoutes.js';
 const app = express();
 
 // Habilitar CORS (permite cualquier origen)
-app.use(cors());
+app.use(cors({
+  origin: '*', // o la URL de tu app si quieres restringir
+  methods: ['GET','POST','PUT','DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 
 // Middleware para subir archivos
 app.use(fileUpload({
