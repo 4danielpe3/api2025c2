@@ -1,6 +1,6 @@
 import { Router } from 'express'
 //importar las funciones
-import { getPedidos, getPedidosxID, postPedido } from '../controladores/pedidosControl.js'
+import { getPedidos, getPedidosxID, postPedido } from '../controladores/pedidosCtrl.js'
 
 import { verificarToken } from '../middleware/verificarToken.js';
 
