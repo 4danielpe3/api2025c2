@@ -2,7 +2,7 @@ import { Router } from 'express'
 //importar las funciones
 import { getPedidos, getPedidosxID, postPedido } from '../controladores/pedidosCtrl.js'
 
-import { verificarToken } from '../middleware/verificarToken.js';
+import { verificarToken } from '../middlewares/verificarToken.js';
 
 const router = Router();
 //armar nuestras rutas
