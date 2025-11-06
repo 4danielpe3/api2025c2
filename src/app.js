@@ -6,6 +6,7 @@ import cors from 'cors';
 import clientesRoutes from './routes/clientesRoutes.js';
 import productosRoutes from './routes/productosRoutes.js';
 import loginRoutes from './routes/loginRoutes.js';
+import pedidosRoutes from './routes/pedidosRoutes.js'
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(fileUpload({
 app.use(express.json());
 
 // Rutas de la API
+app.use('/api', pedidosRoutes)
 app.use('/api', clientesRoutes);
 app.use('/api', productosRoutes);
 app.use('/api', loginRoutes);
